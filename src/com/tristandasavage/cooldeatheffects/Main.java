@@ -23,7 +23,7 @@ public class Main extends JavaPlugin {
         instance = this;
         this.getServer().getPluginManager().registerEvents(new Listeners(), this);
         this.logger = this.getLogger();
-        this.logger.log(Level.INFO, "Cool Death Effects v1.0 has been loaded!");
+        this.logger.log(Level.INFO, "Cool Death Effects beta-1.0 has been loaded!");
     }
 
     public void onDisable() {
