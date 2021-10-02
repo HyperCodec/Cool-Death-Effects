@@ -3,6 +3,7 @@ package com.tristandasavage.cooldeatheffects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,19 +25,22 @@ public class Listeners implements Listener {
             Player player = (Player) event.getEntity();
             if(player.getHealth() - event.getFinalDamage() <= 0) {
                 event.setCancelled(true);
-                try {
-                    for (ItemStack itemStack : player.getInventory().getContents()) {
-                        player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-                        player.getInventory().removeItem(itemStack);
-                    }
-                    for (ItemStack itemStack : player.getInventory().getArmorContents()) {
-                        player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-                        player.getInventory().removeItem(itemStack);
-                    }
-                } catch (IllegalArgumentException e) {
+                if (player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY) == false) {
+                    try {
+                        for (ItemStack itemStack : player.getInventory().getContents()) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                            player.getInventory().removeItem(itemStack);
+                        }
+                        for (ItemStack itemStack : player.getInventory().getArmorContents()) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                            player.getInventory().removeItem(itemStack);
+                        }
+                    } catch (IllegalArgumentException e) {
 
+                    }
+                    player.getInventory().clear();
                 }
-                player.getInventory().clear();
+
                 player.getActivePotionEffects().clear();
                 player.setHealth(20);
                 player.setFoodLevel(20);
