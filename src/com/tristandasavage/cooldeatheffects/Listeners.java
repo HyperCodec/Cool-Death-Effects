@@ -45,13 +45,16 @@ public class Listeners implements Listener {
                 player.setHealth(20);
                 player.setFoodLevel(20);
                 DeathMessages.sendDeathMessage(event, player);
-                Respawn.respawnPlayer(player);
+
                 // If you add your own death effect, make the number in rand.nextInt 1 higher and add else if(randomnumber == yournumber) {YourDeathClass.yourDeathEffect(player);}
                 Random rand = new Random();
                 int randomnumber = rand.nextInt(3);
                 if (randomnumber == 0) {Poof.poofDeathEffect(player);}
                 else if (randomnumber == 1) {Lightning.lightningDeathEffect(player);}
                 else if (randomnumber == 2) {Explosion.explosionDeathEffect(player);}
+
+                Respawn.respawnPlayer(player);
+
 
 
             }
